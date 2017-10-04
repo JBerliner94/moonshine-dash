@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<meta http-equiv="refresh" content="30">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.css">
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.js"></script>
+    <style type="text/css">
+    	.c3-chart-lines .c3-circles .c3-circle{
+		    /*display: none;*/
+		}
+		.c3-legend-item {
+			display: none
+		}
+
+		.c3-axis-y-label {
+			/*color: white;*/
+		}
+
+		path.domain { stroke: rgb(107,231,89); }
+
+		.tick text { 
+			stroke: rgb(107,231,89);
+			/*font-size: 15px;*/
+		 }
+
+		#chart {
+			width: 100%;
+			margin: 0 auto;
+			margin-top: -40px;
+		}
+
+		@media screen and (max-device-width: 400px) {
+			#chart {
+				margin-top: -40%;
+			}
+
+			img {
+				height: 50px;
+				margin-top: -10px;
+			}
+
+			#time {
+				font-size: 8px;
+			}
+
+			#return {
+				font-size: 8px;
+			}
+
+			#return-wrapper {
+				font-size: 8px;
+			}
+
+			#name {
+				font-size: 36px;
+				padding-top: 20px;
+			}
+		}
+    </style>
+  </head>
+  <body>
+  	<div id="y" style="display: none;"><%= y %></div>
+  	<div id="x" style="display: none;"><%= x %></div>
+  	<div id="data" style="display: none"><%= data %></div>
+    <!-- <p>Welcome to <%= title %></p> -->
+    <div style="height: 100%; border: 5px solid rgb(107,231,89);">
+	    <div style="margin: 0 auto; width: 100%; text-align: center; ">
+		    <h5 style="right: 5%; top: 2%; color: white; position: absolute; color: rgb(107,231,89); font-family: Courier New;">MoonshineTM, 2017
+		    	
+		    </h5>
+		    <a style="padding: 3px; text-decoration: none; right: 5%; top: 6%; position: absolute; font-family: Courier New; margin-top: 15px; color: rgb(107,231,89); border: 2px solid rgb(107,231,89);" href="#">CONTACT</a>
+
+		    <div style="left: 20px; top: 10px; position: absolute; color: rgb(107,231,89);">
+		    	<h5 style="text-align: left; margin-bottom: 5px;"><span id="time"></span></h5>
+		    	<h3 id="return-wrapper" style="text-align: left; margin-top: 0px;">Total Returns: <span id="return"></span> %</h3>
+		    </div>
+		    <h1 id="name" style="text-align: center; color: rgb(107,231,89); font-family: Courier New; font-size: 64px;">@#$//</h1>
+		    <img src="/images/rounded-robot-design-with-spirals-arms.png">
+		    <div style="color: rgba(107,231,89, 0.8); font-size: 9px; width: 30%; margin: 0 auto; padding: 5px;">
+			    Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+			</div>
+		    
+
+
+    	</div>
+
+    	<div id="chart"></div>
+    </div>
+    <script type="text/javascript">
+    	y = document.getElementById("y").innerHTML
+    	x = document.getElementById("x").innerHTML
+    	y_data = ['Trade Return [%]']
+    	x_data = ['x']
+    	// console.log(y)
+    	y.split(',').forEach((i) => {
+    		y_data.push(Number(i))
+    	})
+    	x.split(',').forEach((i) => {
+    		x_data.push(new Date(i))
+    	})
+
+    	function add(a,b) {
+    		return a+b
+    	}
+
+    	cumulative_y = ['Total Return [%]']
+    	for (var i=0; i<y.length; i++) {
+    		tmp_slice = y_data.slice(1, i+2);
+    		// console.log(tmp_slice)
+    		cumulative_y.push(tmp_slice.reduce(add, 0))
+    	}
+
+    	document.getElementById("return").innerHTML = Math.round(Number(cumulative_y.slice(-1)[0]))
+    	document.getElementById("time").innerHTML = x_data.slice(-1)[0]
+
+    	
+    	// var data 
+    	// console.log(cumulative_y)
+
+    	var dataset = [{
+    		data: y_data
+    	}]
+
+    	var chart = c3.generate({
+    		bindto: '#chart',
+    		data: {
+    			x: 'x',
+    			columns: [
+    				x_data,
+    				cumulative_y,
+    				y_data
+    			],
+    			type: 'spline'
+    		},
+    		axis: {
+    			x: { 
+    				
+    				show: true,
+    				type: 'timeseries',
+    				tick: {
+    					format: '%H:%M',
+    					count: 50
+    				}
+
+    			},
+    			y: {
+    				show: true,
+    				label: {
+    					// position: 'outer-middle',
+    					// text: 'Returns',
+    					// color: 'white'
+    				},
+    			y2: {
+    				show: true
+    			}
+    			}
+    		},
+    		color: {
+    			pattern: ['#6be759', 'red']
+    		}
+    	});
+    </script>
+  </body>
+</html>
