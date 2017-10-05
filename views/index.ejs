@@ -74,10 +74,10 @@
 		    <a style="padding: 3px; text-decoration: none; right: 5%; top: 6%; position: absolute; font-family: Courier New; margin-top: 15px; color: rgb(107,231,89); border: 2px solid rgb(107,231,89);" href="#">CONTACT</a>
 
 		    <div style="left: 20px; top: 10px; position: absolute; color: rgb(107,231,89);">
-		    	<h5 style="text-align: left; margin-bottom: 5px;"><span id="time"></span></h5>
+		    	<h5 style="text-align: left; margin-bottom: 5px;">Last: <span id="time"></span></h5>
 		    	<h3 id="return-wrapper" style="text-align: left; margin-top: 0px;">Total Returns: <span id="return"></span> %</h3>
 		    </div>
-		    <h1 id="name" style="text-align: center; color: rgb(107,231,89); font-family: Courier New; font-size: 64px;">@#$//</h1>
+		    <h1 id="name" class="logo" style="text-align: center; color: rgb(107,231,89); font-family: Courier New; font-size: 64px;">@MOONSHINE</h1>
 		    <img src="/images/rounded-robot-design-with-spirals-arms.png">
 		    <div style="color: rgba(107,231,89, 0.8); font-size: 9px; width: 30%; margin: 0 auto; padding: 5px;">
 			    Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
@@ -107,13 +107,24 @@
     	}
 
     	cumulative_y = ['Total Return [%]']
-    	for (var i=0; i<y.length; i++) {
-    		tmp_slice = y_data.slice(1, i+2);
-    		// console.log(tmp_slice)
-    		cumulative_y.push(tmp_slice.reduce(add, 0))
-    	}
+    	// for (var i=0; i<y.length; i++) {
+    	// 	tmp_slice = y_data.slice(1, i+2);
+    	// 	console.log(tmp_slice)
+    	// 	cumulative_y.push(tmp_slice.reduce(add, 0))
+    	// }
 
-    	document.getElementById("return").innerHTML = Math.round(Number(cumulative_y.slice(-1)[0]))
+    	cumsum = [];
+		j = y_data.slice(1);
+
+		for(var a=0;a<j.length;a++) {
+		  if(a==0) cumsum[a] = j[0];
+		  else cumsum[a] = cumsum[a-1] + j[a];
+		}
+
+
+
+
+    	document.getElementById("return").innerHTML = Number(cumsum.slice(-1)[0])
     	document.getElementById("time").innerHTML = x_data.slice(-1)[0]
 
     	
@@ -130,7 +141,7 @@
     			x: 'x',
     			columns: [
     				x_data,
-    				cumulative_y,
+    				// cumsum,
     				y_data
     			],
     			type: 'spline'
@@ -139,6 +150,7 @@
     			x: { 
     				
     				show: true,
+    				// min: new Date("2017-10-04 09:30:00.00"),
     				type: 'timeseries',
     				tick: {
     					format: '%H:%M',
@@ -147,6 +159,8 @@
 
     			},
     			y: {
+    				max: 5,
+    				min: -5,
     				show: true,
     				label: {
     					// position: 'outer-middle',
