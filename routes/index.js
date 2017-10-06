@@ -8,7 +8,7 @@ var Transaction = require('../models/transaction')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	Transaction.find((err, data) => {
+	Transaction.find({}).sort({sell_time: 1}).exec((err, data) => {
 		// console.log(data.map(d=> { return d.sell_time}))
 		// console.log(data.map(d=> {return new Date(d.sell_time)}))
 		res.render('index', { title: 'Express', 
