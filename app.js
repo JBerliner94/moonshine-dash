@@ -10,7 +10,7 @@ var users = require('./routes/users');
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://jaykib:jaybee2323@ds155674.mlab.com:55674/moonshine_store')
+mongoose.connect('mongodb://reader:reader123@ds155674.mlab.com:55674/moonshine_store')
 
 var app = express();
 

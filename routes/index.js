@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 					Return.find({})
 						  .sort({time: 1})
 						  .exec((err, returns) => {
-						  	res.render('index', { title: 'Express', 
+						  	res.render('index', { title: 'Moonshine', 
 								data: transactions,
 								data2: returns,
 								x:transactions.map(d=> { return d.sell_time.toJSON()}),

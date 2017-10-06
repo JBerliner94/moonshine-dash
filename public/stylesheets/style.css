@@ -112,6 +112,8 @@ path.domain { stroke: rgb(107,231,89); }
 	margin-top: -40px;
 }
 
+
+/* For narrow screens */
 @media screen and (max-device-width: 400px) {
 	#chart {
 		margin-top: -20%;

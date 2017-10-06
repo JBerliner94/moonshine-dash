@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://jaykib:jaybee2323@ds155674.mlab.com:55674/moonshine_store')
+mongoose.connect('mongodb://reader:reader123@ds155674.mlab.com:55674/moonshine_store')
 var Transaction = require('./models/transaction')
 
 var newItem = new Transaction({
@@ -10,6 +10,7 @@ var newItem = new Transaction({
 	quantity: 2,
 	sell_date: new Date,
 	sell_price: 26
-}).save()
-  .then(()=>{console.log('saved')})
-  .catch(e=>{console.error(e)})
+})
+// .save()
+//   .then(()=>{console.log('saved')})
+//   .catch(e=>{console.error(e)})
