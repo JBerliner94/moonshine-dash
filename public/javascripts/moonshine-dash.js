@@ -11,7 +11,9 @@ x2_data = ['x2']
 sort_into_list = (str, list, type) => {
 	str.split(',').forEach((i) => {
 		if (type === 'date') {
-			list.push(new Date(i))
+            var date = new Date(i)
+            var EST_date = new Date(date.setTime(date.getTime() + 1000 * 3600 * 3)) //Bc Heroku is on PCT server
+			list.push(EST_date)
 		} else if ( type === 'number') {
 			list.push(Number(i))
 		}
