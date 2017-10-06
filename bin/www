@@ -7,6 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('moonshine-stream2:server');
 var http = require('http');
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+var Transaction = require('../models/transaction')
+var Return = require('../models/return')
 
 /**
  * Get port from environment and store in Express.
@@ -19,17 +23,88 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app).listen(port);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// server.listen(port);
+// server.on('error', onError);
+// server.on('listening', onListening);
 
-/**
+var intervalData
+io = require('socket.io').listen(server, {log: true});
+io.sockets.on('connection', (socket)=>{
+  Transaction.find({})
+               .sort({sell_time:1})
+               .exec((err, transactions)=>{
+                  Return.find({})
+                    .sort({time:1})
+                    .exec((err2, returns)=>{
+                      socket.emit('dataSet', {
+                         x:transactions.map(d=> { return d.sell_time.toJSON()}),
+                        y:transactions.map(d=>{return 100*(d.sell_price - d.buy_price)/d.buy_price}),
+                        x2:returns.map(d=>{return d.time.toJSON()}),
+                        y2:returns.map(d=>{return d.returns})
+                      })
+                    })
+               })
+  var interval = setInterval(()=>{
+    // var randomData = getData();
+    Transaction.find({})
+               .sort({sell_time:1})
+               .exec((err, transactions)=>{
+                  Return.find({})
+                    .sort({time:1})
+                    .exec((err2, returns)=>{
+                      socket.emit('dataSet', {
+                         x:transactions.map(d=> { return d.sell_time.toJSON()}),
+                        y:transactions.map(d=>{return 100*(d.sell_price - d.buy_price)/d.buy_price}),
+                        x2:returns.map(d=>{return d.time.toJSON()}),
+                        y2:returns.map(d=>{return d.returns})
+                      })
+                    })
+               })
+    
+    // socket.emit('dataSet', randomData)
+  }, 30000);
+  socket.on('updateInterval', (intervalData)=>{
+    clearInterval(interval);
+    interval = setInterval(()=>{
+      var randomData = [1,2,3,4];
+      socket.emit('dataSet', randomData)
+    }, intervalData);
+  });
+});
+/*
+*
+*/
+getData = () => {
+  Return.find({})
+        .sort({time:1})
+        .exec((err2, returns)=>{
+          // console.log(returns)
+          return JSON.stringify(returns.toJSON);
+        })
+  // Transaction.find({})
+  //       .sort({sell_time:1})
+  //       .exec((err, transactions)=>{
+  //         Return.find({})
+  //             .sort({time:1})
+  //             .exec((err2, returns)=>{
+  //               // return {
+  //                 // x:transactions.map(d=> { return d.sell_time.toJSON()}),
+  //                 // y:transactions.map(d=>{return 100*(d.sell_price - d.buy_price)/d.buy_price}),
+  //                 // x2:returns.map(d=>{return d.time.toJSON()}),
+  //                 // y2:returns.map(d=>{return d.returns})
+  //               // }
+  //               return [1,2,3,4]
+  //             })
+  //       })
+}
+
+/*
  * Normalize a port into a number, string, or false.
  */
 

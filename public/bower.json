@@ -1,0 +1,21 @@
+{
+  "name": "public",
+  "homepage": "https://github.com/JBerliner94/moonshine-dash",
+  "authors": [
+    "Jake Berliner"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "socket.io": "^2.0.3",
+    "jquery": "^3.2.1"
+  }
+}

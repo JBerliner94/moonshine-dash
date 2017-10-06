@@ -30,4 +30,21 @@ router.get('/', function(req, res, next) {
 				})
 });
 
+getData = () => {
+	Transaction.find({})
+				.sort({sell_time:1})
+				.exec((err, transactions)=>{
+					Return.find({})
+							.sort({time:1})
+							.exec((err2, returns)=>{
+								return {
+									x:transactions.map(d=> { return d.sell_time.toJSON()}),
+									y:transactions.map(d=>{return 100*(d.sell_price - d.buy_price)/d.buy_price}),
+									x2:returns.map(d=>{return d.time.toJSON()}),
+									y2:returns.map(d=>{return d.returns})
+								}
+							})
+				})
+}
+
 module.exports = router;
