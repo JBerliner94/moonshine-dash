@@ -2,18 +2,19 @@ body {
   /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: black;
+  /*color: rgb(107,231,89); */
 }
 
 a {
-  color: #00B7FF;
+  color: rgb(107,231,89); ;
 }
 
 #name {
   -webkit-animation: flicker 4s infinite;
-  text-align:center;
-  /*margin-top:3em;*/
-  /*font-family:'Lato', sans-serif;*/
   font-size:64px;
+  text-align: center;
+  color: rgb(107,231,89);
+  font-family: Courier New;
 }
 
 @-webkit-keyframes flicker
@@ -25,3 +26,117 @@ a {
 20% {opacity:.5;}
 25% {opacity:1;}
 }
+
+.invisible {
+	display: none;
+}
+
+#main-border {
+	height: 100%;
+	border: 5px solid rgb(107,231,89);
+}
+
+#top-container {
+	margin: 0 auto;
+	width: 100%; 
+	text-align: center;
+}
+
+#trademark {
+	right: 5%;
+	top: 2%; 
+	color: white; 
+	position: absolute; 
+	color: rgb(107,231,89); 
+	font-family: Courier New;
+}
+
+#contact {
+	padding: 3px;
+	text-decoration: none; 
+	right: 5%; 
+	top: 6%; 
+	position: absolute; 
+	font-family: Courier New; 
+	margin-top: 15px; 
+	color: rgb(107,231,89); 
+	border: 2px solid rgb(107,231,89);
+}
+
+#statBox {
+	left: 20px;
+	top: 10px; 
+	position: 
+	absolute; color: rgb(107,231,89);
+}
+
+#statBox h5 {
+	text-align: left; 
+	margin-bottom: 5px;
+}
+
+#return-wrapper {
+	text-align: left; 
+	margin-top: 0px;
+}
+
+#robot {
+	color: rgba(107,231,89, 0.8);
+	font-size: 9px;
+	width: 30%;
+	margin: 0 auto;
+	padding: 5px;
+}
+
+.c3-chart-lines .c3-circles .c3-circle{
+		    /*display: none;*/
+		}
+.c3-legend-item {
+	display: none
+}
+
+.c3-axis-y-label {
+	/*color: white;*/
+}
+
+path.domain { stroke: rgb(107,231,89); }
+
+.tick text { 
+	stroke: rgb(107,231,89);
+	/*font-size: 15px;*/
+ }
+
+#chart {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: -40px;
+}
+
+@media screen and (max-device-width: 400px) {
+	#chart {
+		margin-top: -20%;
+	}
+
+	img {
+		height: 50px;
+		margin-top: -10px;
+	}
+
+	#time {
+		font-size: 8px;
+	}
+
+	#return {
+		font-size: 8px;
+	}
+
+	#return-wrapper {
+		font-size: 8px;
+	}
+
+	#name {
+		font-size: 40px;
+		padding-top: 40px;
+	}
+}
+
