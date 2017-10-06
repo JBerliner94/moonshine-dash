@@ -50,7 +50,7 @@ var now = new Date()
 var day = now.getDate()
 var month = now.getMonth() + 1;
 var year = now.getFullYear();
-var today = new Date(year + "-" + month + "-" + day + " 09:30:00.00")
+var today = new Date(year + "-" + month + "-" + day + " 14:30:00.00")
 
 
 //MAKE PLOT
